@@ -1,0 +1,13 @@
+<h1>{{title}}</h1>
+
+<form action="/search/id/results" method="GET">
+    <div class="form-group">
+        <label for="propertyId">Search by Property ID:</label>
+        <input type="text" id="propertyId" name="propertyId"
+               placeholder="Enter property ID..."
+               required>
+    </div>
+    <button class="btnId" type="submit">Search</button>
+</form>
+
+<a href="/search/propertyLine">← Back to Search</a>

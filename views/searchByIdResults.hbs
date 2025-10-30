@@ -1,0 +1,41 @@
+<h1>{{title}}</h1>
+
+{{#if propertyId}}
+    <p>Search results for Property ID: "<strong>{{propertyId}}</strong>"</p>
+{{/if}}
+
+<p>Found {{results.length}} properties</p>
+
+{{#if results.length}}
+    <div class="search-results">
+        {{#each results}}
+            <div class="result-item">
+                <img src="{{this.thumbnail}}" alt="{{this.NAME}}" width="150">
+                <div class="result-info">
+                    <h3>{{this.NAME}}</h3>
+                    <p><strong>Property ID:</strong> {{this.id}}</p>
+                    <p><strong>Type:</strong> {{this.property_type}}</p>
+                    <p><strong>Room Type:</strong> {{this.room_type}}</p>
+                    <p><strong>Location:</strong> {{this.neighbourhood}}</p>
+                    <p><strong>Price:</strong> {{this.price}}</p>
+                    {{#if this.review_scores_rating}}
+                        <p><strong>Rating:</strong> {{this.review_scores_rating}}/100</p>
+                    {{/if}}
+                    {{#if this.accommodates}}
+                        <p><strong>Accommodates:</strong> {{this.accommodates}} guests</p>
+                    {{/if}}
+                    {{#if this.bedrooms}}
+                        <p><strong>Bedrooms:</strong> {{this.bedrooms}}</p>
+                    {{/if}}
+                    {{#if this.beds}}
+                        <p><strong>Beds:</strong> {{this.beds}}</p>
+                    {{/if}}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+{{else}}
+    <p>No properties found with the specified ID.</p>
+{{/if}}
+
+<a href="/search/id">← Back to ID Search</a>

@@ -161,6 +161,48 @@ app.get("/search/propertyLine/results", (req, res) => {
   });
 });
 
+// Search by Property ID form (support with and without trailing slash)
+app.get(["/search/id", "/search/id/"], (req, res) => {
+  res.render("searchByIdForm", {
+    title: "Search by Property ID",
+  });
+});
+
+// Search by Property ID results (validation + sanitization)
+app.get("/search/id/results", (req, res) => {
+  const raw = req.query.propertyId;
+  const propertyId = (raw || "").toString().trim();
+
+  if (!propertyId) {
+    return res.status(400).render("searchByIdForm", {
+      title: "Search by Property ID",
+      error: "Please provide a property ID to search.",
+    });
+  }
+
+  if (propertyId.length > 50) {
+    return res.status(400).render("searchByIdForm", {
+      title: "Search by Property ID",
+      error: "Property ID is too long.",
+    });
+  }
+
+  // perform search against both 'id' and '_id' fields (coerce to string)
+  const results = (airbnbData || [])
+    .filter((item) => {
+      const id1 = item._id?.toString() || "";
+      const id2 = item.id?.toString() || "";
+      return id1.includes(propertyId) || id2.includes(propertyId);
+    })
+    .slice(0, 100);
+
+  res.render("searchByIdResults", {
+    title: "Search Results - Property ID",
+    propertyId,
+    results,
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).render("error", {

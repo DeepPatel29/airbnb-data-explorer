@@ -152,7 +152,7 @@ app.get("/search/propertyLine/results", (req, res) => {
         item.neighbourhood?.toLowerCase().includes(searchTerm) ||
         item.property_type?.toLowerCase().includes(searchTerm)
     )
-    .slice(0, 50);
+    .slice(0, 100);
 
   res.render("searchResults", {
     title: "Search Results",
